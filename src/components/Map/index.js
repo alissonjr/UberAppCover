@@ -11,6 +11,8 @@ import markerImage from "../../assets/marker.png";
 
 import { LocationBox, LocationText, LocationTimeBox, LocationTimeText, LocationTimeTextSmall } from "./styles";
 
+import Details from '../Details';
+
 Geocoder.init('AIzaSyAvrhMaVhxo8Dv9GIpdgTHN4AzokXOzuRo');
 
 export default class Map extends Component {
@@ -82,7 +84,7 @@ export default class Map extends Component {
                                         right: getPixelSize(50),
                                         top: getPixelSize(50),
                                         left: getPixelSize(50),
-                                        bottom: getPixelSize(50)
+                                        bottom: getPixelSize(350)
                                     }
                                 });
                             }}
@@ -112,7 +114,8 @@ export default class Map extends Component {
                     </React.Fragment>
                 ) }
                 </MapView>
-                <Search onLocationSelected={this.handleLocationSelected} />
+
+                { destination ? <Details /> : <Search onLocationSelected={this.handleLocationSelected} /> }
             </View>
         );
     }
