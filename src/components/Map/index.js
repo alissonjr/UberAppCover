@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import { getPixelSize } from '../../utils';
@@ -8,8 +8,9 @@ import Search from '../Search';
 import Directions from '../Directions';
 
 import markerImage from "../../assets/marker.png";
+import backImage from "../../assets/back.png";
 
-import { LocationBox, LocationText, LocationTimeBox, LocationTimeText, LocationTimeTextSmall } from "./styles";
+import { LocationBox, LocationText, LocationTimeBox, LocationTimeText, LocationTimeTextSmall, Back } from "./styles";
 
 import Details from '../Details';
 
@@ -59,6 +60,10 @@ export default class Map extends Component {
                 title: data.structured_formatting.main_text,
             }
         })
+    }
+
+    handleBack = () => {
+        this.setState({ destination: null })
     }
 
     render() {
@@ -115,7 +120,16 @@ export default class Map extends Component {
                 ) }
                 </MapView>
 
-                { destination ? <Details /> : <Search onLocationSelected={this.handleLocationSelected} /> }
+                {destination ? (
+                    <React.Fragment>
+                    <Details />
+                        <Back onPress={this.handleBack}>
+                            <Image source={backImage} />
+                        </Back>
+                    </React.Fragment>
+                ) : (
+                    <Search onLocationSelected={this.handleLocationSelected} />
+                )}
             </View>
         );
     }
